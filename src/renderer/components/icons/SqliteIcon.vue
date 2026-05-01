@@ -3,13 +3,7 @@ withDefaults(defineProps<{ size?: number }>(), { size: 14 });
 </script>
 
 <template>
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    :width="size"
-    :height="size"
-    viewBox="0 0 32 32"
-    aria-hidden="true"
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" :width="size" :height="size" viewBox="0 0 32 32" aria-hidden="true">
     <defs>
       <linearGradient
         id="sqliteIconGradient"

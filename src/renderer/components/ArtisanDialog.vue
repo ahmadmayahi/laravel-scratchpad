@@ -85,7 +85,6 @@ function onInputChange(e: Event): void {
   cmd.value = (e.target as HTMLInputElement).value;
   historyIdx.value = null;
 }
-
 </script>
 
 <template>

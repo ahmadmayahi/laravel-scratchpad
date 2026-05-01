@@ -1,6 +1,17 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from "vue";
-import { Plus, Pencil, Trash2, Loader2, CheckCircle2, AlertTriangle, Plug, FolderSearch, RefreshCcw, X } from "lucide-vue-next";
+import {
+  Plus,
+  Pencil,
+  Trash2,
+  Loader2,
+  CheckCircle2,
+  AlertTriangle,
+  Plug,
+  FolderSearch,
+  RefreshCcw,
+  X,
+} from "lucide-vue-next";
 import type { DatabaseConnection, DatabaseTestResult, Settings, SqliteAvailability } from "../../../shared/ipc";
 import DatabaseConnectionModal from "../DatabaseConnectionModal.vue";
 import DatabaseDriverIcon from "../icons/DatabaseDriverIcon.vue";
@@ -191,9 +202,7 @@ function failureMessage(status: { result?: DatabaseTestResult } | undefined): st
                 — available via
                 <span class="font-mono text-fg-muted">{{ sqliteAvailability.pdoSqlite.phpBinary }}</span>
               </template>
-              <template v-else>
-                — not available
-              </template>
+              <template v-else> — not available </template>
             </div>
             <div v-if="!sqliteAvailability?.pdoSqlite.available" class="text-fg-muted">
               Fresh skeletons will boot without a database binding (DB_* lines commented out).
@@ -203,22 +212,18 @@ function failureMessage(status: { result?: DatabaseTestResult } | undefined): st
 
         <!-- sqlite3 CLI status -->
         <div class="flex items-start gap-2 text-[11px] mt-2">
-          <CheckCircle2
-            v-if="sqliteAvailability?.cli.available"
-            :size="12"
-            class="text-success mt-0.5 shrink-0"
-          />
+          <CheckCircle2 v-if="sqliteAvailability?.cli.available" :size="12" class="text-success mt-0.5 shrink-0" />
           <AlertTriangle v-else :size="12" class="text-warning mt-0.5 shrink-0" />
           <div class="flex-1 min-w-0">
             <div class="text-fg">
               <span class="font-mono">sqlite3</span>
               <template v-if="sqliteAvailability?.cli.available">
                 — found at <span class="font-mono text-fg-muted">{{ sqliteAvailability.cli.path }}</span>
-                <span v-if="sqliteAvailability.cli.version" class="text-fg-muted"> (v{{ sqliteAvailability.cli.version }})</span>
+                <span v-if="sqliteAvailability.cli.version" class="text-fg-muted">
+                  (v{{ sqliteAvailability.cli.version }})</span
+                >
               </template>
-              <template v-else>
-                — not found
-              </template>
+              <template v-else> — not found </template>
             </div>
           </div>
           <button
@@ -245,7 +250,7 @@ function failureMessage(status: { result?: DatabaseTestResult } | undefined): st
           <div class="flex-1 min-w-0">
             <div class="text-fg">Custom skeleton database</div>
             <div class="text-fg-muted font-mono truncate">
-              {{ sqliteSettings?.customDatabasePath ?? "Default — <skeleton>/database/database.sqlite" }}
+              {{ sqliteSettings?.customDatabasePath ?? "Default — [skeleton]/database/database.sqlite" }}
             </div>
           </div>
           <button class="icon-btn" title="Pick a SQLite file" @click="pickCustomDb">
@@ -298,7 +303,9 @@ function failureMessage(status: { result?: DatabaseTestResult } | undefined): st
                 <CheckCircle2 :size="10" />
                 Connected
                 <span
-                  v-if="statusOf(c.id)?.result?.ok && (statusOf(c.id)?.result as { serverVersion?: string }).serverVersion"
+                  v-if="
+                    statusOf(c.id)?.result?.ok && (statusOf(c.id)?.result as { serverVersion?: string }).serverVersion
+                  "
                   >· {{ (statusOf(c.id)?.result as { serverVersion?: string }).serverVersion }}</span
                 >
               </span>

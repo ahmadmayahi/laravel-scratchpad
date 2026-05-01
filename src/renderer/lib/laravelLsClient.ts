@@ -123,11 +123,7 @@ export class LaravelLsClient extends JsonRpcClient {
         }
     }
 
-    protected override handleServerRequest(msg: {
-        id: number | string;
-        method: string;
-        params?: unknown;
-    }): void {
+    protected override handleServerRequest(msg: { id: number | string; method: string; params?: unknown }): void {
         // Acknowledge silently for the lifecycle methods we know to expect;
         // everything else gets `-32601` so the server can adapt instead of
         // assuming we silently implemented a capability we never declared.

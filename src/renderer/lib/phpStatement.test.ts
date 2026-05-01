@@ -90,13 +90,9 @@ describe("resolveStatement", () => {
     });
 
     it("walks backwards/forwards to capture a multi-line statement", () => {
-        const source = [
-            "<?php",
-            "",
-            "$x = collect([1, 2, 3])",
-            "    ->map(fn ($n) => $n * 2)",
-            "    ->sum();",
-        ].join("\n");
+        const source = ["<?php", "", "$x = collect([1, 2, 3])", "    ->map(fn ($n) => $n * 2)", "    ->sum();"].join(
+            "\n",
+        );
         const m = fakeModel(source);
         const stmt = resolveStatement(m, 4);
         expect(stmt).not.toBeNull();

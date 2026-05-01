@@ -1,12 +1,6 @@
 <script setup lang="ts">
 import { computed, type Component } from "vue";
-import {
-  AlertTriangle,
-  CheckCircle2,
-  Download,
-  Loader2,
-  ShieldCheck,
-} from "lucide-vue-next";
+import { AlertTriangle, CheckCircle2, Download, Loader2, ShieldCheck } from "lucide-vue-next";
 import appIconUrl from "../assets/app-icon.png";
 import type { SplashStep } from "../../shared/ipc";
 
@@ -88,9 +82,7 @@ function labelFor(step: SplashStep): string {
     case "skipped":
       return `Continuing without ${step.label.toLowerCase()}`;
     case "error":
-      return step.id === "laravelLs"
-        ? "Couldn't download language server"
-        : `${step.label} failed`;
+      return step.id === "laravelLs" ? "Couldn't download language server" : `${step.label} failed`;
   }
 }
 
@@ -99,9 +91,7 @@ function labelFor(step: SplashStep): string {
 // errors are non-blocking (the user sees them in the Laravel
 // settings tab afterwards), so they're rendered as a quiet failure
 // row without buttons.
-const laravelLsError = computed(() =>
-  props.steps.find((s) => s.id === "laravelLs" && s.state === "error"),
-);
+const laravelLsError = computed(() => props.steps.find((s) => s.id === "laravelLs" && s.state === "error"));
 </script>
 
 <template>
@@ -121,11 +111,7 @@ const laravelLsError = computed(() =>
       </div>
 
       <div v-else class="w-full flex flex-col gap-3">
-        <div
-          v-for="step in steps"
-          :key="step.id"
-          class="flex flex-col items-center gap-1.5"
-        >
+        <div v-for="step in steps" :key="step.id" class="flex flex-col items-center gap-1.5">
           <div
             class="inline-flex items-center gap-2 text-[12px]"
             :class="step.state === 'error' ? 'text-danger' : 'text-fg-muted'"
@@ -144,8 +130,7 @@ const laravelLsError = computed(() =>
               <div v-else class="h-full bg-accent/60 indeterminate-bar" />
             </div>
             <div v-if="step.progress" class="text-[11px] text-fg-subtle tabular-nums mt-1">
-              {{ progressLabel(step)
-              }}<span v-if="progressPercent(step) > 0"> · {{ progressPercent(step) }}%</span>
+              {{ progressLabel(step) }}<span v-if="progressPercent(step) > 0"> · {{ progressPercent(step) }}%</span>
             </div>
           </template>
 
@@ -174,13 +159,7 @@ const laravelLsError = computed(() =>
 
 <style scoped>
 .indeterminate-bar {
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--accent) 30%,
-    var(--accent) 70%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg, transparent 0%, var(--accent) 30%, var(--accent) 70%, transparent 100%);
   background-size: 50% 100%;
   background-repeat: no-repeat;
   animation: indeterminate 1.4s ease-in-out infinite;

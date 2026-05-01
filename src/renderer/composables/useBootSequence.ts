@@ -1,13 +1,7 @@
 import { computed, onBeforeUnmount, onMounted, ref, type ComputedRef, type Ref } from "vue";
 import { useAppStore } from "../stores/app";
 import { useToastStore } from "../stores/toasts";
-import type {
-    FramePayload,
-    LaravelLsStatus,
-    PhpAvailability,
-    SkeletonStatus,
-    SplashStep,
-} from "../../shared/ipc";
+import type { FramePayload, LaravelLsStatus, PhpAvailability, SkeletonStatus, SplashStep } from "../../shared/ipc";
 
 const WELCOME_CODE =
     "<?php\n\n// Welcome — ⌘R to run, ⌘K for commands.\n\ncollect([1, 2, 3, 4, 5])\n    ->map(fn ($n) => $n * $n)\n    ->sum();\n";
@@ -117,21 +111,15 @@ export function useBootSequence(): BootSequenceHandle {
             }),
         );
 
-        const [
-            loadedProjects,
-            loadedSettings,
-            loadedSnippets,
-            finalLaravelLsStatus,
-            initialPhp,
-            initialSkeletons,
-        ] = await Promise.all([
-            window.lsp.projectsList(),
-            window.lsp.settingsGet(),
-            window.lsp.snippetsList(),
-            window.lsp.laravelLsPrepare(),
-            window.lsp.phpAvailability(),
-            window.lsp.skeletonsList(),
-        ]);
+        const [loadedProjects, loadedSettings, loadedSnippets, finalLaravelLsStatus, initialPhp, initialSkeletons] =
+            await Promise.all([
+                window.lsp.projectsList(),
+                window.lsp.settingsGet(),
+                window.lsp.snippetsList(),
+                window.lsp.laravelLsPrepare(),
+                window.lsp.phpAvailability(),
+                window.lsp.skeletonsList(),
+            ]);
         store.setProjects(loadedProjects);
         store.setSettings(loadedSettings);
         store.setSnippets(loadedSnippets);

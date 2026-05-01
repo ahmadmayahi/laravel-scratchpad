@@ -56,9 +56,7 @@ async function onRescan(): Promise<void> {
 <template>
   <div class="h-full w-full flex items-center justify-center p-8">
     <div class="max-w-md w-full flex flex-col items-center gap-5 text-center">
-      <div
-        class="h-12 w-12 rounded-full bg-danger/10 text-danger flex items-center justify-center"
-      >
+      <div class="h-12 w-12 rounded-full bg-danger/10 text-danger flex items-center justify-center">
         <AlertTriangle :size="22" />
       </div>
 

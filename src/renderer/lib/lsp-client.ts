@@ -206,11 +206,7 @@ export class IntelephenseClient extends JsonRpcClient {
         }
     }
 
-    protected override handleServerRequest(msg: {
-        id: number | string;
-        method: string;
-        params?: unknown;
-    }): void {
+    protected override handleServerRequest(msg: { id: number | string; method: string; params?: unknown }): void {
         switch (msg.method) {
             case "workspace/configuration": {
                 const items = (msg.params as { items?: Array<{ section?: string }> })?.items ?? [];

@@ -33,7 +33,10 @@ function disposeAllIn(map: Map<string, monaco.IDisposable[]>): void {
 }
 
 // Intelephense only accepts major.minor here; patch versions can fall back to older parser rules.
-function pickIntelephensePhpVersion(versions: Array<{ path: string; version: string }>, defaultBinary: string | null): string {
+function pickIntelephensePhpVersion(
+    versions: Array<{ path: string; version: string }>,
+    defaultBinary: string | null,
+): string {
     const fallback = versions[0]?.version ?? "8.3.0";
     const picked = (() => {
         if (defaultBinary) {

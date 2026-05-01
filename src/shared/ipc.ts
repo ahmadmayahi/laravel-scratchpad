@@ -346,9 +346,7 @@ export interface DatabaseConnection {
  * the server version (where the driver supports it), failure reports
  * the underlying message so the renderer can surface it inline.
  */
-export type DatabaseTestResult =
-    | { ok: true; serverVersion?: string }
-    | { ok: false; error: string };
+export type DatabaseTestResult = { ok: true; serverVersion?: string } | { ok: false; error: string };
 
 export interface Settings {
     ui: {

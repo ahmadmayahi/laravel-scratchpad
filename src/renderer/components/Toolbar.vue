@@ -375,10 +375,7 @@ const MENU_LABEL_CLASS = "px-3 pt-2 pb-1 text-[10px] uppercase tracking-wider fo
         </DropdownMenuTrigger>
         <DropdownMenuPortal>
           <DropdownMenuContent :class="MENU_CONTENT_CLASS" align="start" :side-offset="4">
-            <DropdownMenuItem
-              :class="[ITEM_CLASS, dbActiveId === null && 'bg-accent/15']"
-              @select="pickDatabase(null)"
-            >
+            <DropdownMenuItem :class="[ITEM_CLASS, dbActiveId === null && 'bg-accent/15']" @select="pickDatabase(null)">
               <span class="text-fg-muted shrink-0">
                 <Check v-if="dbActiveId === null" :size="12" />
                 <Database v-else :size="12" />
@@ -447,10 +444,7 @@ const MENU_LABEL_CLASS = "px-3 pt-2 pb-1 text-[10px] uppercase tracking-wider fo
               <span class="flex-1 truncate">Light</span>
               <span v-if="currentMode === 'light'" class="text-accent text-[10px]">●</span>
             </DropdownMenuItem>
-            <DropdownMenuItem
-              :class="[ITEM_CLASS, currentMode === 'dark' && 'bg-accent/15']"
-              @select="setMode('dark')"
-            >
+            <DropdownMenuItem :class="[ITEM_CLASS, currentMode === 'dark' && 'bg-accent/15']" @select="setMode('dark')">
               <span class="text-fg-muted shrink-0"><Moon :size="12" /></span>
               <span class="flex-1 truncate">Dark</span>
               <span v-if="currentMode === 'dark'" class="text-accent text-[10px]">●</span>

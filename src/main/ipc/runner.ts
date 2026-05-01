@@ -90,7 +90,11 @@ export function registerRunnerIpc(ctx: MainContext): void {
  * we'd otherwise spawn against a missing binary and ENOENT — `fs.existsSync`
  * gates that.
  */
-async function resolveTabPhp(ctx: MainContext, proj: Project, overrideBinary: string | null | undefined): Promise<string> {
+async function resolveTabPhp(
+    ctx: MainContext,
+    proj: Project,
+    overrideBinary: string | null | undefined,
+): Promise<string> {
     if (overrideBinary && fs.existsSync(overrideBinary)) return overrideBinary;
     return ctx.choosePhpFor(proj);
 }

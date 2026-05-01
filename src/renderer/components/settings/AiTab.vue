@@ -138,10 +138,7 @@ function openExternal(url: string): void {
         <template v-if="testStatus === 'testing'"> <Loader2 :size="12" class="animate-spin" /> Testing… </template>
         <template v-else>Test</template>
       </button>
-      <span
-        v-if="testStatus === 'ok'"
-        class="inline-flex items-center gap-1 text-success text-[12px]"
-      >
+      <span v-if="testStatus === 'ok'" class="inline-flex items-center gap-1 text-success text-[12px]">
         <CheckCircle2 :size="12" />{{ testMessage }}
       </span>
       <span v-else-if="testStatus === 'error'" class="inline-flex items-center gap-1 text-danger text-[12px]">

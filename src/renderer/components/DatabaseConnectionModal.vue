@@ -1,16 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, useTemplateRef, watch } from "vue";
-import {
-  Database,
-  X,
-  AlertTriangle,
-  CheckCircle2,
-  Loader2,
-  Plug,
-  Eye,
-  EyeOff,
-  FolderOpen,
-} from "lucide-vue-next";
+import { Database, X, AlertTriangle, CheckCircle2, Loader2, Plug, Eye, EyeOff, FolderOpen } from "lucide-vue-next";
 import type { DatabaseConnection, DatabaseDriver, DatabaseTestResult } from "../../shared/ipc";
 import Modal from "./Modal.vue";
 
@@ -117,7 +107,8 @@ watch(driver, (next, prev) => {
 });
 
 watch(
-  () => [name.value, database.value, host.value, port.value, username.value, password.value, clearSecret.value] as const,
+  () =>
+    [name.value, database.value, host.value, port.value, username.value, password.value, clearSecret.value] as const,
   () => {
     if (testPhase.value !== "idle") {
       testPhase.value = "idle";
@@ -317,13 +308,7 @@ function clearStoredPassword(): void {
 
       <div v-if="isNetworkDriver" class="grid grid-cols-[110px_1fr] items-center gap-3">
         <label class="text-[12px] text-fg-muted text-right">Username</label>
-        <input
-          v-model="username"
-          class="field font-mono"
-          placeholder="root"
-          autocomplete="off"
-          spellcheck="false"
-        />
+        <input v-model="username" class="field font-mono" placeholder="root" autocomplete="off" spellcheck="false" />
       </div>
 
       <div v-if="isNetworkDriver" class="grid grid-cols-[110px_1fr_auto] items-center gap-3">

@@ -144,11 +144,7 @@ useKeyboardShortcuts({
       @declined="ideHelper.onDeclined"
       @installed="ideHelper.onInstalled"
     />
-    <AddSshProjectDialog
-      :open="dialog === 'addSsh'"
-      @close="store.closeDialog"
-      @added="onSshProjectAdded"
-    />
+    <AddSshProjectDialog :open="dialog === 'addSsh'" @close="store.closeDialog" @added="onSshProjectAdded" />
     <SecretPromptDialog />
     <ToastContainer />
   </div>
