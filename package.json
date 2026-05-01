@@ -1,0 +1,178 @@
+{
+  "name": "laravel-scratchpad",
+  "productName": "Laravel ScratchPad",
+  "version": "0.1.1",
+  "description": "A PHP / Laravel REPL scratchpad, built with Electron + Vue + Monaco.",
+  "main": "dist/main/main.js",
+  "author": {
+    "name": "Ahmad Mayahi",
+    "email": "ahmad.mayahi@gmail.com"
+  },
+  "homepage": "https://github.com/ahmadmayahi/laravel-scratchpad",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ahmadmayahi/laravel-scratchpad"
+  },
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -k \"npm:dev:renderer\" \"npm:dev:main\"",
+    "dev:renderer": "vite --host 127.0.0.1 --port 5173",
+    "dev:main": "wait-on tcp:5173 && tsc -p tsconfig.main.json && electron . --remote-debugging-port=9222 --inspect=9229",
+    "build:renderer": "vite build",
+    "build:main": "tsc -p tsconfig.main.json",
+    "build": "npm run build:main && npm run build:renderer",
+    "dist": "npm run build && electron-builder -mwl",
+    "dist:mac": "npm run build && electron-builder --mac dmg zip",
+    "dist:win": "npm run build && electron-builder --win nsis",
+    "dist:linux": "npm run build && electron-builder --linux AppImage deb",
+    "pack": "npm run build && electron-builder --dir",
+    "start": "npm run build && electron .",
+    "typecheck": "tsc --noEmit -p tsconfig.main.json && vue-tsc --noEmit -p tsconfig.renderer.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint \"src/**/*.{ts,tsx,vue}\"",
+    "lint:fix": "eslint --fix \"src/**/*.{ts,tsx,vue}\"",
+    "format": "prettier --write \"**/*.{ts,tsx,vue,json,css,md,mjs,yml,yaml}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,vue,json,css,md,mjs,yml,yaml}\"",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@electron/osx-sign": "^2.4.0",
+    "better-sqlite3": "^12.9.0",
+    "clsx": "^2.1.1",
+    "electron-updater": "^6.8.3",
+    "intelephense": "^1.16.5",
+    "lucide-vue-next": "^1.0.0",
+    "monaco-editor": "^0.55.1",
+    "pinia": "^3.0.4",
+    "reka-ui": "^2.9.6",
+    "splitpanes": "^4.0.4",
+    "ssh2": "^1.17.0",
+    "vue": "^3.5.33"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@tailwindcss/vite": "^4.2.4",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/splitpanes": "^1.0.6",
+    "@types/ssh2": "^1.15.5",
+    "@vitejs/plugin-vue": "^6.0.6",
+    "concurrently": "^9.2.1",
+    "electron": "^41.3.0",
+    "electron-builder": "^26.8.1",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^10.0.0",
+    "eslint-plugin-vue": "^10.0.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.3.0",
+    "tailwindcss": "^4.2.4",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.0.0",
+    "vite": "^8.0.10",
+    "vitest": "^4.1.5",
+    "vue-eslint-parser": "^10.0.0",
+    "vue-tsc": "^3.2.7",
+    "wait-on": "^9.0.5"
+  },
+  "overrides": {
+    "dompurify": "^3.3.3",
+    "@tootallnate/once": "^3.0.1",
+    "uuid": "^14.0.0"
+  },
+  "build": {
+    "appId": "net.mayahi.LaravelScratchPad",
+    "productName": "Laravel ScratchPad",
+    "directories": {
+      "buildResources": "build",
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "resources/**/*",
+      "package.json"
+    ],
+    "publish": {
+      "provider": "github",
+      "owner": "ahmadmayahi",
+      "repo": "laravel-scratchpad"
+    },
+    "extraResources": [
+      {
+        "from": "resources/",
+        "to": "resources/",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "asarUnpack": [
+      "node_modules/better-sqlite3/**/*",
+      "node_modules/ssh2/**/*"
+    ],
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "notarize": true
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "signtoolOptions": {
+        "publisherName": "Ahmad Mayahi"
+      }
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": false
+    },
+    "linux": {
+      "category": "Development",
+      "synopsis": "PHP / Laravel REPL scratchpad",
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        },
+        {
+          "target": "deb",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ]
+    }
+  }
+}

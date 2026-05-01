@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!--
+  CSP notes — the renderer is sandboxed (contextIsolation + sandbox + no
+  nodeIntegration) so this is defense-in-depth rather than first-line.
+
+  • `script-src`: `'unsafe-eval'` is required by Monaco's syntax-grammar
+    loader and Vue's runtime template compiler; `blob:` is needed because
+    Monaco instantiates its language workers via blob: URLs. We keep
+    `'unsafe-inline'` for now because Vite's dev-mode HMR client injects
+    inline module scripts — dropping it would break `npm run dev`.
+  • `connect-src 'self'`: the only remote request in the app (Packagist
+    version probe in main/skeleton.ts) runs in the main process, where
+    CSP does not apply — so no external origin needs to be listed here.
+  • `style-src`: Monaco and reka-ui both emit dynamic <style> tags, hence
+    `'unsafe-inline'`. Tailwind 4 is statically compiled into the bundle.
+-->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; worker-src 'self' blob:; connect-src 'self';" />
+<title>Laravel ScratchPad</title>
+</head>
+<body>
+<div id="app"></div>
+<script type="module" src="./app/main.ts"></script>
+</body>
+</html>

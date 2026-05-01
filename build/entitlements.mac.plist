@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!--
+      Entitlements kept to the minimum the app actually requires:
+        allow-jit + allow-unsigned-executable-memory — V8/Monaco JIT.
+        disable-library-validation — better-sqlite3's unsigned native
+          binding (and any future native node modules).
+        network.client — Packagist version probe in main/skeleton.ts.
+        files.user-selected.read-write — the "Open Laravel project…"
+          folder picker hands back a user-selected path we then read.
+
+      Previously set but now dropped:
+        cs.debugger — lets any process attach and read our memory
+          (including user REPL code being evaluated).
+        cs.allow-dyld-environment-variables — permits DYLD_INSERT_LIBRARIES
+          injection against the signed binary.
+      Both are dev conveniences, not production needs.
+    -->
+    <key>com.apple.security.cs.allow-jit</key>
+    <true/>
+    <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
+    <true/>
+    <key>com.apple.security.cs.disable-library-validation</key>
+    <true/>
+    <key>com.apple.security.network.client</key>
+    <true/>
+    <key>com.apple.security.files.user-selected.read-write</key>
+    <true/>
+</dict>
+</plist>

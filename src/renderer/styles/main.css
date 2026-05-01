@@ -1,0 +1,342 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --color-bg: var(--bg);
+    --color-surface: var(--surface);
+    --color-surface-2: var(--surface-2);
+    --color-surface-3: var(--surface-3);
+    --color-line: var(--line);
+    --color-line-strong: var(--line-strong);
+    --color-fg: var(--fg);
+    --color-fg-muted: var(--fg-muted);
+    --color-fg-subtle: var(--fg-subtle);
+    --color-accent: var(--accent);
+    --color-success: var(--success);
+    --color-warning: var(--warning);
+    --color-danger: var(--danger);
+    --color-info: var(--info);
+    --color-code-keyword: var(--code-keyword);
+    --color-code-string: var(--code-string);
+    --color-code-number: var(--code-number);
+    --color-code-class: var(--code-class);
+    --color-code-bool: var(--code-bool);
+    --color-code-null: var(--code-null);
+    --color-code-prop: var(--code-prop);
+
+    --color-brand-laravel: #ff2d20;
+    --color-brand-php: #8892bf;
+
+    --font-mono: "SF Mono", "ui-monospace", "Menlo", "Monaco", "monospace";
+}
+
+:root,
+:root.theme-dark {
+    --bg: #0a0b10;
+    --surface: #0e0f15;
+    --surface-2: #15171e;
+    --surface-3: #1e212a;
+    --line: rgba(255, 255, 255, 0.08);
+    --line-strong: rgba(255, 255, 255, 0.16);
+    --fg: #f5f5f7;
+    --fg-muted: #a0a2aa;
+    --fg-subtle: #6e717d;
+    --accent: #ff2d20;
+
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #f43f5e;
+    --info: #38bdf8;
+
+    --code-keyword: #f472b6;
+    --code-string: #34d399;
+    --code-number: #fb923c;
+    --code-class: #67e8f9;
+    --code-bool: #f472b6;
+    --code-null: #9aa0aa;
+    --code-prop: #d1d5db;
+
+    color-scheme: dark;
+}
+
+:root.theme-light {
+    --bg: #fafafa;
+    --surface: #ffffff;
+    --surface-2: #f1f3f5;
+    --surface-3: #e3e6eb;
+    --line: rgba(0, 0, 0, 0.09);
+    --line-strong: rgba(0, 0, 0, 0.18);
+    --fg: #111827;
+    --fg-muted: #4b5563;
+    --fg-subtle: #6b7280;
+    --accent: #e1261c;
+
+    --success: #059669;
+    --warning: #d97706;
+    --danger: #e11d48;
+    --info: #0284c7;
+
+    --code-keyword: #be185d;
+    --code-string: #0f766e;
+    --code-number: #b45309;
+    --code-class: #0e7490;
+    --code-bool: #be185d;
+    --code-null: #6b7280;
+    --code-prop: #374151;
+
+    color-scheme: light;
+}
+
+@layer base {
+    html,
+    body,
+    #app {
+        height: 100%;
+        margin: 0;
+        -webkit-font-smoothing: antialiased;
+    }
+    body {
+        font-family:
+            -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        background: var(--bg);
+        color: var(--fg);
+        /* Native-app default: chrome (toolbars, tabs, status bar, version
+           chips) is NOT selectable. Cmd+A inside an input or the result
+           pane stays scoped to that element instead of grabbing the whole
+           window's text. Opt-in with `user-select: text` (or the Tailwind
+           `select-text` utility) on anything the user might want to copy. */
+        user-select: none;
+        -webkit-user-select: none;
+        cursor: default;
+    }
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+    select,
+    input,
+    textarea {
+        color-scheme: inherit;
+    }
+    input,
+    textarea {
+        cursor: text;
+        user-select: text;
+        -webkit-user-select: text;
+    }
+    /* Inline `<code>` and `<pre>` carry user-facing snippets (paths, version
+       strings, command examples) — selectable so users can copy them. */
+    code,
+    pre {
+        user-select: text;
+        -webkit-user-select: text;
+    }
+}
+
+@layer components {
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: var(--line-strong);
+        border-radius: 8px;
+        border: 2px solid transparent;
+        background-clip: padding-box;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--fg-subtle);
+        background-clip: padding-box;
+    }
+
+    button,
+    [role="button"],
+    [cmdk-item],
+    [data-radix-collection-item],
+    [data-cmdk-item],
+    [data-reka-collection-item],
+    [role="tab"],
+    [role="menuitem"] {
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    .chip {
+        @apply inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px]
+               bg-surface-2 border border-line text-fg transition-colors
+               select-none;
+    }
+    .chip:hover {
+        @apply bg-surface-3 border-line-strong;
+    }
+
+    .icon-btn {
+        @apply inline-flex items-center justify-center h-7 w-7 rounded-md
+               text-fg-muted hover:text-fg hover:bg-surface-2
+               transition-colors cursor-default outline-none
+               focus-visible:ring-2 focus-visible:ring-accent/60;
+    }
+    .icon-btn:disabled {
+        @apply opacity-40 pointer-events-none;
+    }
+
+    .btn-primary {
+        @apply inline-flex items-center gap-1.5 px-3 h-7 rounded-md
+               text-white text-[12px] font-medium transition-all
+               hover:brightness-110 active:brightness-95 cursor-default
+               disabled:opacity-40 disabled:pointer-events-none;
+        background: linear-gradient(to bottom, #10b981, #059669);
+        box-shadow:
+            inset 0 1px 0 0 rgba(255, 255, 255, 0.15),
+            0 4px 12px -4px rgba(16, 185, 129, 0.55);
+    }
+    .btn-danger {
+        @apply inline-flex items-center gap-1.5 px-3 h-7 rounded-md
+               text-white text-[12px] font-medium transition-all
+               hover:brightness-110 active:brightness-95 cursor-default
+               disabled:opacity-40 disabled:pointer-events-none;
+        background: linear-gradient(to bottom, #f43f5e, #e11d48);
+        box-shadow:
+            inset 0 1px 0 0 rgba(255, 255, 255, 0.15),
+            0 4px 12px -4px rgba(244, 63, 94, 0.55);
+    }
+    .btn-subtle {
+        @apply inline-flex items-center gap-1.5 px-2.5 h-7 rounded-md
+               text-[12px] text-fg border border-line bg-surface-2
+               hover:bg-surface-3 transition-all cursor-default;
+    }
+
+    .kbd {
+        @apply inline-flex items-center justify-center px-1.5 h-[18px] min-w-[18px]
+               rounded bg-surface-3 border border-line text-[10px]
+               text-fg-muted font-mono tracking-tight select-none;
+    }
+
+    .hairline {
+        @apply border-t border-line;
+    }
+
+    .dialog-shell {
+        @apply bg-surface border border-line rounded-xl shadow-2xl
+               overflow-hidden flex flex-col;
+    }
+
+    .field,
+    .select {
+        @apply h-7 px-2 rounded-md bg-surface-2 border border-line text-fg
+               text-[12px] focus:outline-none focus:ring-2 focus:ring-accent/50
+               focus:border-accent/50 transition;
+    }
+    .select {
+        @apply pr-8 appearance-none bg-no-repeat bg-[right_0.5rem_center] bg-[length:1rem];
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='rgb(150,150,160)'><path fill-rule='evenodd' d='M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z' clip-rule='evenodd'/></svg>");
+    }
+
+    @keyframes pulseRing {
+        0% {
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5);
+        }
+        70% {
+            box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+        }
+    }
+    .running-pulse {
+        animation: pulseRing 1.6s ease-out infinite;
+    }
+
+    /* Animate the positioned child so floating-ui keeps ownership of the wrapper transform. */
+    @keyframes dropdownEnter {
+        from {
+            opacity: 0;
+            transform: scale(0.96);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    [data-reka-popper-content-wrapper] > * {
+        animation: dropdownEnter 120ms ease-out;
+    }
+    [data-reka-popper-content-wrapper] > *[data-side="bottom"][data-align="start"] {
+        transform-origin: top left;
+    }
+    [data-reka-popper-content-wrapper] > *[data-side="bottom"][data-align="end"] {
+        transform-origin: top right;
+    }
+    [data-reka-popper-content-wrapper] > *[data-side="bottom"][data-align="center"] {
+        transform-origin: top center;
+    }
+
+    [cmdk-group-heading] {
+        padding: 14px 14px 6px;
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--fg-subtle);
+    }
+    [cmdk-list] > [cmdk-group]:first-of-type > [cmdk-group-heading] {
+        padding-top: 8px;
+    }
+    [cmdk-group] + [cmdk-group] {
+        margin-top: 4px;
+    }
+    [cmdk-group] {
+        padding-bottom: 4px;
+    }
+}
+
+.title-bar-drag {
+    -webkit-app-region: drag;
+}
+.title-bar-nodrag {
+    -webkit-app-region: no-drag;
+}
+
+[data-panel-resize-handle-enabled] {
+    background: transparent;
+    transition: background-color 120ms ease;
+    outline: none;
+}
+[data-panel-resize-handle-enabled][data-resize-handle-state="hover"],
+[data-panel-resize-handle-enabled][data-resize-handle-state="drag"] {
+    background: var(--accent);
+    opacity: 0.55;
+}
+
+.monaco-root .run-line-glyph {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 6px;
+    cursor: pointer;
+    opacity: 0.85;
+    transition:
+        opacity 120ms ease,
+        transform 120ms ease;
+}
+.monaco-root .run-line-glyph:hover {
+    opacity: 1;
+    transform: scale(1.15);
+}
+.monaco-root .run-line-glyph::before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 7px solid #22c55e;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+}
+.monaco-root .run-line-highlight {
+    background: rgba(34, 197, 94, 0.08);
+}
+
