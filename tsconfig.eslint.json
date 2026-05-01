@@ -1,0 +1,17 @@
+{
+  "//": "ESLint-only tsconfig. typescript-eslint's project resolver needs every file it lints to belong to a tsconfig that ENUMERATES it (not just match it via an include glob — TS skips .vue files from globs because it doesn't natively compile them). This config spells the renderer + main file sets out together so the .vue + .ts files all resolve. Build pipelines still use tsconfig.main.json / tsconfig.renderer.json; this file is only loaded by ESLint via parserOptions.project.",
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["vite/client", "node"],
+    "jsx": "preserve",
+    "allowImportingTsExtensions": false,
+    "noEmit": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/**/*.d.ts"
+  ]
+}

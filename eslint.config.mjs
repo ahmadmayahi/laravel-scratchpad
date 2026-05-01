@@ -17,10 +17,23 @@ export default [
             parser: vueParser,
             parserOptions: {
                 parser: tseslint.parser,
+                // `extraFileExtensions` tells the parser .vue is a
+                // first-class extension — without it the project
+                // walker skips them when enumerating files from
+                // tsconfig's `include` glob.
                 extraFileExtensions: [".vue"],
                 ecmaVersion: "latest",
                 sourceType: "module",
-                project: ["./tsconfig.main.json", "./tsconfig.renderer.json"],
+                // Dedicated ESLint-only tsconfig that explicitly
+                // enumerates .vue files. The build tsconfigs
+                // (`tsconfig.main.json` / `tsconfig.renderer.json`)
+                // aren't quite right for ESLint: TypeScript's compiler
+                // logic skips .vue files from include globs even when
+                // they're listed, because TS doesn't natively know how
+                // to compile them. The ESLint tsconfig spells the
+                // files out so typescript-eslint's project resolver
+                // can find them.
+                project: ["./tsconfig.eslint.json"],
                 tsconfigRootDir: import.meta.dirname,
             },
         },
@@ -37,6 +50,8 @@ export default [
         },
     },
     {
+        // Top-level config files live outside any tsconfig's `include`
+        // — opt them out of type-aware linting entirely.
         files: ["eslint.config.mjs", "vite.config.ts"],
         languageOptions: {
             parserOptions: {
